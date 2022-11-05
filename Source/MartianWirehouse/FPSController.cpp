@@ -29,6 +29,20 @@ void AFPSController::Tick(float DeltaTime)
 void AFPSController::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
-
+	PlayerInputComponent->BindAxis(TEXT("Vertical"), this, &AFPSController::MoveVertical);
+	PlayerInputComponent->BindAxis(TEXT("Horizontal"), this, &AFPSController::MoveHorizontal);
+	PlayerInputComponent->BindAxis(TEXT("MouseX"), this, &AFPSController::AddControllerYawInput);
+	PlayerInputComponent->BindAxis(TEXT("MouseY"), this, &AFPSController::AddControllerPitchInput);
 }
+
+void AFPSController::MoveVertical(float axis)
+{
+	AddMovementInput(GetActorForwardVector() * axis);
+}
+
+void AFPSController::MoveHorizontal(float axis)
+{
+	AddMovementInput(GetActorRightVector() * axis);
+}
+
 
